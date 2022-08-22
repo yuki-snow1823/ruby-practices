@@ -5,7 +5,7 @@ class Frame
     @shots_set = shots_set
     @frame_no = frame_no
     @frame_score = 0
-    @is_spare = shots_set.include?('X')
-    @is_strike = shots_set[0] == 'X' || (shots_set[0] + shots_set[1] == 10)
+    @is_spare = shots_set[0] + shots_set[1] == 10
+    @is_strike = shots_set.include?('X')
   end
 end
