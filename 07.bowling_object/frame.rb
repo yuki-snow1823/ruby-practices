@@ -6,7 +6,7 @@ class Frame
   end
 
   def strike?
-    @shots_pair == ['X']
+    @shots_pair.include?('X')
   end
 
   def spare?
