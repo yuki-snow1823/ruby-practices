@@ -6,6 +6,7 @@ class Shot
   def initialize(shots)
     shot_pair = []
     @shots_each_frame = []
+    # TODO: mapに書き換えたい
     shots.each do |shot|
       if shot == 'X'
         @shots_each_frame << [shot]
