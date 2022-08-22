@@ -1,5 +1,5 @@
 class Frame
-  attr_accessor :point
+  attr_accessor :shots_pair
 
   def initialize(shots_pair)
     @shots_pair = shots_pair
