@@ -17,15 +17,23 @@ shots_each_frame.each do |shots_pair|
   if frame.strike?
     game.total_score += 10
   else
-    # ストライクだと0になる
     game.total_score += (frame.shots_pair[0].to_i + frame.shots_pair[1].to_i)
   end
-  game.total_score += (frame.shots_pair[0].to_i + frame.shots_pair[1].to_i) if is_before_frame_strike
+
+  if is_before_frame_strike && frame.strike?
+    game.total_score += 10
+  elsif is_before_frame_strike
+    game.total_score += (frame.shots_pair[0].to_i + frame.shots_pair[1].to_i)
+  end
   is_before_frame_strike = frame.strike?
 
-  # ストライクだと0になる
-  game.total_score += frame.shots_pair[0].to_i if is_before_frame_spare
+  if is_before_frame_spare && frame.strike?
+    game.total_score += 10
+  elsif is_before_frame_spare
+    game.total_score += frame.shots_pair[0].to_i
+  end
   is_before_frame_spare = frame.spare?
+
   p game.total_score
 end
 
