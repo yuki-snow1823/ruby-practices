@@ -8,4 +8,8 @@ class Frame
   def strike?
     @shots_pair == ['X']
   end
+
+  def spare?
+    @shots_pair.map(&:to_i).sum == 10
+  end
 end
