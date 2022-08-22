@@ -13,13 +13,15 @@ class Shot
         @shots_each_frame << [shot]
         frame_no += 1
         # フレームが最後ではなくショットが最後の時
+      elsif frame_no == 10 && shots.length - 1 == index
+        shots_set << shot
+        @shots_each_frame << shots_set
+      elsif frame_no == 10
+        shots_set << shot
       elsif shots.length - 1 == index
         shots_set << shot
         @shots_each_frame << shots_set
         # 最後のショット以降はまとめてフレームに値を追加していく（2つか3つか分からないため）
-      elsif frame_no == 10
-        shots_set << shot
-        p shots_set
       else
         # 最後のフレーム以外かつストライクでない場合は2つショットが揃ったらフレームに追加
         shots_set << shot
