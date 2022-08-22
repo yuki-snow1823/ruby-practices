@@ -22,9 +22,10 @@ shots_each_frame.each_with_index do |shots_pair, index|
 
   if is_before_frame_strike && frame.strike?
     game.total_score += 10
-    if shots_each_frame[index + 1][0] == 'X'
+    # 最後X出すとエラーになる
+    if index < 10 && shots_each_frame[index + 1][0] == 'X'
       game.total_score += 10
-    else
+    elsif index < 10
       game.total_score += shots_each_frame[index + 1][0].to_i
     end
   elsif is_before_frame_strike
