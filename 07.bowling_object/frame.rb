@@ -1,15 +1,16 @@
 class Frame
-  attr_accessor :shots_pair
+  attr_accessor(:shots_set, :frame_score)
 
-  def initialize(shots_pair)
-    @shots_pair = shots_pair
+  def initialize(shots_set)
+    @shots_set = shots_set
+    @frame_score = 0
   end
 
   def strike?
-    @shots_pair.include?('X')
+    @shots_set.include?('X')
   end
 
   def spare?
-    @shots_pair.map(&:to_i).sum == 10
+    @shots_set[0] + @shots_set[1] == 10
   end
 end

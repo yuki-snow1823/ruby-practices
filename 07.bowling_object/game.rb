@@ -2,8 +2,10 @@
 
 class Game
   attr_accessor :total_score
+  attr_accessor :frames
 
-  def initialize
+  def initialize(frames)
+    @frames = frames
     @total_score = 0
   end
 end
