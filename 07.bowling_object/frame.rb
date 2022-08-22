@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Frame
   attr_accessor(:shots_set, :frame_score, :is_spare, :is_strike, :frame_no)
 
