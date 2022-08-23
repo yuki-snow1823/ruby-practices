@@ -38,5 +38,4 @@ class Shot
     @shots_set = []
     @frame_no += 1
   end
-
 end
