@@ -36,6 +36,6 @@ class Shot
   def add_two_shots_set_to_frame
     @shots_each_frame << @shots_set
     @shots_set = []
-    @frame_no += 1
+    @frame_no += 1 
   end
 end
