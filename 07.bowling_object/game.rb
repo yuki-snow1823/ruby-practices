@@ -19,7 +19,6 @@ class Game
                                @all_frames[i].first_shot.score + @all_frames[i].second_shot.score
                              end
     end
-    pp @all_frames
     p @all_frames.sum(&:score)
   end
 
