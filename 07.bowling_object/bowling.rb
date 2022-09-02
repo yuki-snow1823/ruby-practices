@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require './shot'
-require './frame'
-require './game'
+require_relative './shot'
+require_relative './frame'
+require_relative './game'
 
-class BowlingApp
+class Bowling
   def self.divide_all_shots_to_frames(input_shots)
     all_frames = []
     10.times do |i|
@@ -21,8 +21,8 @@ class BowlingApp
   end
 end
 
-game = Game.new
-
 input_shots = ARGV[0].split(',')
-game.all_frames = BowlingApp.divide_all_shots_to_frames(input_shots)
+
+game = Game.new
+game.all_frames = Bowling.divide_all_shots_to_frames(input_shots)
 game.play
