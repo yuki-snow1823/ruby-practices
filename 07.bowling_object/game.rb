@@ -35,12 +35,12 @@ class Game
   end
 
   def strike_calc(frame_count)
-    if @all_frames[frame_count + 1].strike?
+    if frame_count == 8 && @all_frames[frame_count + 1].strike?
+      20 + @all_frames[frame_count + 1].first_shot.score
+    elsif @all_frames[frame_count + 1].strike?
       20 + @all_frames[frame_count + 2].first_shot.score
     else
       10 + @all_frames[frame_count + 1].first_shot.score + @all_frames[frame_count + 1].second_shot.score
     end
   end
 end
-
-# ストライク連続したら、さらに次を見る
