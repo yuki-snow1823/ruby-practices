@@ -19,6 +19,7 @@ class Game
                                @all_frames[i].first_shot.score + @all_frames[i].second_shot.score
                              end
     end
+    pp @all_frames
     p @all_frames.sum(&:score)
   end
 
@@ -36,7 +37,7 @@ class Game
 
   def strike_calc(frame_count)
     if frame_count == 8 && @all_frames[frame_count + 1].strike?
-      20 + @all_frames[frame_count + 1].first_shot.score
+      10 + @all_frames[frame_count + 1].first_shot.score + @all_frames[frame_count + 1].second_shot.score
     elsif @all_frames[frame_count + 1].strike?
       20 + @all_frames[frame_count + 2].first_shot.score
     else
