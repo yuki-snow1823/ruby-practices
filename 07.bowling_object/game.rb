@@ -6,4 +6,9 @@ class Game
   def initialize
     @total_score = 0
   end
+
+
+
+  def divide_all_shots_to_frames
+  end
 end
