@@ -17,7 +17,7 @@ class BowlingApp
                       Frame.new(input_shots.shift, input_shots.shift)
                     end
     end
-    pp all_frames
+    all_frames
   end
 end
 
@@ -26,5 +26,4 @@ game.all_frames
 
 input_shots = ARGV[0].split(',')
 game.all_frames = BowlingApp.divide_all_shots_to_frames(input_shots)
-game.all_frames # なぜか10が入る
 game.play
