@@ -1,10 +1,11 @@
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require './shot'
 require './frame'
 require './game'
 
-input_shots = gets.chomp!.split(',')
+input_shots = ARGV[0].split(',')
 shots = Shot.new(input_shots)
 frames = []
 
