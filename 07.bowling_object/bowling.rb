@@ -22,7 +22,6 @@ class BowlingApp
 end
 
 game = Game.new
-game.all_frames
 
 input_shots = ARGV[0].split(',')
 game.all_frames = BowlingApp.divide_all_shots_to_frames(input_shots)
