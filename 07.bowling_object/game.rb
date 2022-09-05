@@ -3,8 +3,17 @@
 class Game
   attr_accessor :all_frames
 
-  def initialize
+  def initialize(input_shots)
     @all_frames = []
+    10.times do |i|
+      @all_frames << if i == 9 && (input_shots.first == 'X' || input_shots.first.to_i + input_shots[1].to_i == 10)
+                       Frame.new(input_shots.shift, input_shots.shift, input_shots.shift)
+                     elsif input_shots.first == 'X'
+                       Frame.new(input_shots.shift)
+                     else
+                       Frame.new(input_shots.shift, input_shots.shift)
+                     end
+    end
   end
 
   def play
