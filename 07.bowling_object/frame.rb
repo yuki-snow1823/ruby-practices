@@ -25,10 +25,10 @@ class Frame
   end
 
   def strike?
-    true if @first_shot.mark == 'X'
+    @first_shot.mark == 'X'
   end
 
   def spare?
-    true if @first_shot.mark != 'X' && @first_shot.score + @second_shot.score == 10
+    @first_shot.mark != 'X' && @first_shot.score + @second_shot.score == 10
   end
 end
