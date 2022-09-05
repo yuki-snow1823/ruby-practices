@@ -5,5 +5,5 @@ require_relative './shot'
 require_relative './frame'
 require_relative './game'
 
-game = Game.new(ARGV[0].split(','))
+game = Game.new(ARGV[0])
 game.play
