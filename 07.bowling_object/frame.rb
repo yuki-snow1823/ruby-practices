@@ -14,8 +14,8 @@ class Frame
   def self.divide_all_shots_to_frames(input_shots, game)
     frames = []
     10.times do |i|
-      frames << if i == 9 && (input_shots.first == 'X' || input_shots.first.to_i + input_shots[1].to_i == 10)
-                  Frame.new(input_shots.shift, input_shots.shift, input_shots.shift)
+      frames << if i == 9
+                  Frame.new(*input_shots)
                 elsif input_shots.first == 'X'
                   Frame.new(input_shots.shift)
                 else
