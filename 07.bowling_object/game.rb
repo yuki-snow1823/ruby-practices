@@ -11,7 +11,7 @@ class Game
   def play
     10.times do |i|
       @frames[i].score = if i == 9
-                           last_frame_calc
+                           @frames.last.first_shot.score.to_i + @frames.last.second_shot.score.to_i + @frames.last.third_shot.score.to_i
                          elsif @frames[i].strike?
                            strike_calc(i)
                          elsif @frames[i].spare?
@@ -24,16 +24,6 @@ class Game
   end
 
   private
-
-  def last_frame_calc
-    if @frames.last.strike?
-      10 + @frames.last.second_shot.score + @frames.last.third_shot.score
-    elsif @frames.last.spare?
-      10 + @frames.last.third_shot.score
-    else
-      @frames.last.first_shot.score + @frames.last.second_shot.score
-    end
-  end
 
   def strike_calc(frame_count)
     if frame_count == 8 && @frames[frame_count + 1].strike?
