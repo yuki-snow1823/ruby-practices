@@ -9,18 +9,19 @@ class Game
   end
 
   def play
+    total_score = 0
     10.times do |i|
-      @frames[i].score = if i == 9
-                           @frames.last.first_shot.score.to_i + @frames.last.second_shot.score.to_i + @frames.last.third_shot.score.to_i
-                         elsif @frames[i].strike?
-                           strike_calc(i)
-                         elsif @frames[i].spare?
-                           10 + @frames[i + 1].first_shot.score
-                         else
-                           @frames[i].first_shot.score + @frames[i].second_shot.score
-                         end
+      total_score += if i == 9
+                 @frames.last.first_shot.score.to_i + @frames.last.second_shot.score.to_i + @frames.last.third_shot.score.to_i
+               elsif @frames[i].strike?
+                 strike_calc(i)
+               elsif @frames[i].spare?
+                 10 + @frames[i + 1].first_shot.score
+               else
+                 @frames[i].first_shot.score + @frames[i].second_shot.score
+               end
     end
-    p @frames.sum(&:score)
+    p total_score
   end
 
   private
