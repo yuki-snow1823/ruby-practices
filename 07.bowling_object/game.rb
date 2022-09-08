@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Game
-  attr_accessor :frames
+  attr_reader :frames
 
   def initialize(input_shots)
-    @frames = []
-    Frame.divide_all_shots_to_frames(input_shots, self)
+    @frames = Frame.divide_all_shots_to_frames(input_shots)
   end
 
   def play

@@ -9,9 +9,9 @@ class Frame
     @third_shot = Shot.new(third_mark)
   end
 
-  def self.divide_all_shots_to_frames(input_shots, game)
+  def self.divide_all_shots_to_frames(input_shots)
     shots = input_shots.split(',')
-    game.frames = Array.new(10) do |i|
+    Array.new(10) do |i|
       if i == 9
         Frame.new(*shots)
       elsif shots.first == 'X'
