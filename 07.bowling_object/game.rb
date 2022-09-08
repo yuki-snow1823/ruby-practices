@@ -13,7 +13,7 @@ class Game
       total_score += if i == 9
                        @frames.last.first_shot.score.to_i + @frames.last.second_shot.score.to_i + @frames.last.third_shot.score.to_i
                      elsif @frames[i].strike?
-                       strike_calc(i)
+                       strike_calc_except_last_frame(i)
                      elsif @frames[i].spare?
                        10 + @frames[i + 1].first_shot.score
                      else
@@ -25,10 +25,8 @@ class Game
 
   private
 
-  def strike_calc(frame_count)
-    if frame_count == 8 && @frames[frame_count + 1].strike?
-      10 + @frames[frame_count + 1].first_shot.score + @frames[frame_count + 1].second_shot.score
-    elsif @frames[frame_count + 1].strike?
+  def strike_calc_except_last_frame(frame_count)
+    if @frames[frame_count + 1].strike? && frame_count != 8
       20 + @frames[frame_count + 2].first_shot.score
     else
       10 + @frames[frame_count + 1].first_shot.score + @frames[frame_count + 1].second_shot.score
