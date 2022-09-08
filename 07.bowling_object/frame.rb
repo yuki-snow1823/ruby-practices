@@ -29,4 +29,8 @@ class Frame
   def spare?
     @first_shot.mark != 'X' && @first_shot.score + @second_shot.score == 10
   end
+
+  def shots
+    [@first_shot, @second_shot, @third_shot]
+  end
 end
