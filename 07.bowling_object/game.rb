@@ -11,7 +11,7 @@ class Game
     total_score = 0
     10.times do |i|
       total_score += if i == 9
-                       @frames.last.first_shot.score.to_i + @frames.last.second_shot.score.to_i + @frames.last.third_shot.score.to_i
+                       @frames.last.first_shot.score + @frames.last.second_shot.score + @frames.last.third_shot.score.to_i
                      elsif @frames[i].strike?
                        strike_calc_except_last_frame(i)
                      elsif @frames[i].spare?
