@@ -26,20 +26,19 @@ class FileConverter
     '14' => 's'
   }.freeze
 
-  def self.convert_mode_to_str(mode)
+  def self.mode_to_str(mode)
     octal_number_permission = mode.to_s(8).slice(3..5).split('')
     octal_number_permission.map! { |num| PERMISSION_MAP[num] }
     octal_number_permission.join
   end
 
-  def self.convert_file_type_to_str(mode)
+  def self.file_type_to_str(mode)
     octal_number_file_type = mode.to_s(8).slice(0..1)
     FILE_TYPE_MAP[octal_number_file_type]
   end
 
-  # 権限の先頭のハイフン
   # ユーザーネーム
-  def self.user_name(uid)
+  def self.uid_to_user_name(uid)
     Etc.getpwuid(uid).name
   end
 end

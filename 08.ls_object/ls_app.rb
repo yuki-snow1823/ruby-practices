@@ -41,10 +41,10 @@ class LsApp
   def display_details
     Dir.glob('*') do |file|
       stat = File.stat(file)
-      file_type = FileConverter.convert_file_type_to_str(stat.mode)
-      permission = FileConverter.convert_mode_to_str(stat.mode)
-      # user_name = FileConverter.convert_mode_to_str(stat.uid)
-      puts "#{file_type}#{permission}  #{stat.nlink}"
+      file_type = FileConverter.file_type_to_str(stat.mode)
+      permission = FileConverter.mode_to_str(stat.mode)
+      user_name = FileConverter.uid_to_user_name(stat.uid)
+      puts "#{file_type}#{permission}  #{stat.nlink} #{user_name}"
     end
   end
 end
