@@ -25,9 +25,7 @@ class LsApp
   end
 
   def display_all
-    Dir.foreach('.') do |item|
-      puts item
-    end
+    Dir.foreach('.') { |file| puts file }
   end
 
   def display_except_hides
