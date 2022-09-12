@@ -21,5 +21,15 @@ class LsApp
     raise ArgumentError, message if message
 
     args.shift
+    args
+  end
+
+  def display_all
+    Dir.foreach('.') do |item|
+      puts item
+    end
+  end
+
+  def display_except_hides
   end
 end
