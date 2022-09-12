@@ -7,16 +7,15 @@ ls_app = LsApp.new(ARGV[0], Dir.pwd)
 
 options = ls_app.options
 
+# 残り
 # arl
 # ar
 # rl
 # al
-# rのみ
-# lのみ
-# 何もない
 
-# TODO: 3行で出すとは？どのくらいで次の行へ進ませるのか
-# TODO: lが実装できた時点で1度提出しペアプロの相談（重複コマンドなど）
+# TODO: 3行で出すとは？どのくらいで次の行へ進ませるのか 計算が必要かも
+# TODO: バイト数の表示を右に揃える
+# TODO: 複数条件の場合の実装を考える（このままだと条件ごとに実装だが、効率良くしたい）
 
 case options
 when ['a']
