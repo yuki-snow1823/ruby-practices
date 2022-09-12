@@ -50,7 +50,7 @@ class LsApp
       modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
 
       # TODO: ファイルサイズの右寄せできていない
-      puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name}  #{size} #{modified_time}"
+      puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name}  #{size} #{modified_time} #{file}"
     end
   end
 end
