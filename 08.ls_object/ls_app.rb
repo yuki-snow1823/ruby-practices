@@ -43,8 +43,11 @@ class LsApp
       stat = File.stat(file)
       file_type = FileConverter.file_type_to_str(stat.mode)
       permission = FileConverter.mode_to_str(stat.mode)
+      nlink = stat.nlink
       user_name = FileConverter.uid_to_user_name(stat.uid)
-      puts "#{file_type}#{permission}  #{stat.nlink} #{user_name}"
+      group_name = FileConverter.gid_to_group_name(stat.gid)
+
+      puts "#{file_type}#{permission}  #{nlink} #{user_name} #{group_name}"
     end
   end
 end

@@ -37,8 +37,11 @@ class FileConverter
     FILE_TYPE_MAP[octal_number_file_type]
   end
 
-  # ユーザーネーム
   def self.uid_to_user_name(uid)
     Etc.getpwuid(uid).name
+  end
+
+  def self.gid_to_group_name(gid)
+    Etc.getgrgid(gid).name
   end
 end
