@@ -4,7 +4,7 @@ class LsApp
   attr_reader :options, :dir
 
   def initialize(arg, current_dir)
-    @options = correct_option?(arg)
+    @options = arg ? correct_option?(arg) : nil
     @dir = current_dir
   end
 
@@ -31,5 +31,6 @@ class LsApp
   end
 
   def display_except_hides
+    Dir.glob('*').map { |file| puts file }
   end
 end
