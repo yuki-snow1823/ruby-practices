@@ -2,7 +2,7 @@
 
 require 'etc'
 
-class LsFile
+class FileConverter
   attr_reader :mode
 
   PERMISSION_MAP = {
