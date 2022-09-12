@@ -28,7 +28,25 @@ class LsApp
   end
 
   def display_all
-    Dir.foreach('.') { |file| puts file }
+    file_count_per_line = Dir.foreach('.').count / 3
+    linefeed_count = 0
+    lines = []
+    output_lines = []
+
+    Dir.foreach('.').each do |file|
+      linefeed_count += 1
+      lines << file
+      next unless linefeed_count == file_count_per_line
+
+      output_lines << lines
+      lines = []
+      linefeed_count = 0
+    end
+
+    # TODO: 割り切れない場合にエラーが出る。そもそもこの実装方針で良いのか?
+    output_lines.transpose.each do |l|
+      puts l.join('     ')
+    end
   end
 
   def display_reverse
