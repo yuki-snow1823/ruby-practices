@@ -15,11 +15,16 @@ options = ls_app.options
 # lのみ
 # 何もない
 
+# TODO: 3行で出すとは？どのくらいで次の行へ進ませるのか
+# TODO: lが実装できた時点で1度提出しペアプロの相談（重複コマンドなど）
+
 case options
 when ['a']
   ls_app.display_all
 when ['r']
   ls_app.display_reverse
+when ['l']
+  ls_app.display_details
 else
   ls_app.display_except_hides
 end

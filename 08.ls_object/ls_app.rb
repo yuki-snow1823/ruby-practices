@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './ls_file'
+
 class LsApp
   attr_reader :options, :dir
 
@@ -34,5 +36,13 @@ class LsApp
 
   def display_except_hides
     Dir.glob('*').map { |file| puts file }
+  end
+
+  def display_details
+    files = []
+    Dir.glob('*') do |file|
+      files << LsFile.new(file)
+    end
+    p files[0]
   end
 end
