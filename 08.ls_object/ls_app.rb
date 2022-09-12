@@ -46,8 +46,11 @@ class LsApp
       nlink = stat.nlink
       user_name = FileConverter.uid_to_user_name(stat.uid)
       group_name = FileConverter.gid_to_group_name(stat.gid)
+      size = stat.size
+      modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
 
-      puts "#{file_type}#{permission}  #{nlink} #{user_name} #{group_name}"
+      # TODO: ファイルサイズの右寄せできていない
+      puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name}  #{size} #{modified_time}"
     end
   end
 end

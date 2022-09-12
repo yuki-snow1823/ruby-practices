@@ -44,4 +44,8 @@ class FileConverter
   def self.gid_to_group_name(gid)
     Etc.getgrgid(gid).name
   end
+
+  def self.mtime_be_correct_format(mtime)
+    mtime.strftime('%b %e %H:%M')
+  end
 end
