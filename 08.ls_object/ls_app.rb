@@ -7,6 +7,7 @@ class LsApp
 
   def initialize(arg, current_dir)
     @options = arg ? correct_option?(arg) : nil
+    # TODO: 歓迎要件
     @dir = current_dir
   end
 

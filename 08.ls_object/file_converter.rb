@@ -3,8 +3,6 @@
 require 'etc'
 
 class FileConverter
-  attr_reader :mode
-
   PERMISSION_MAP = {
     '0' => '---',
     '1' => '--x',
