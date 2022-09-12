@@ -39,10 +39,12 @@ class LsApp
   end
 
   def display_details
-    files = []
     Dir.glob('*') do |file|
-      files << LsFile.new(file)
+      stat = File.stat(file)
+      file_type = LsFile.convert_file_type_to_str(stat.mode)
+      permission = LsFile.convert_mode_to_str(stat.mode)
+      # user_name = LsFile.convert_mode_to_str(stat.uid)
+      puts "#{file_type}#{permission} #{stat.nlink}"
     end
-    p files[0]
   end
 end
