@@ -11,17 +11,15 @@ options = ls_app.options
 # ar
 # rl
 # al
-# aのみ
-# lのみ
 # rのみ
+# lのみ
 # 何もない
 
-# if options == %w([a r l])
-#   p 'hoge'
-# end
-
-if options == ['a']
+case options
+when ['a']
   ls_app.display_all
+when ['r']
+  ls_app.display_reverse
 else
   ls_app.display_except_hides
 end

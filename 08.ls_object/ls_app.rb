@@ -28,6 +28,10 @@ class LsApp
     Dir.foreach('.') { |file| puts file }
   end
 
+  def display_reverse
+    Dir.glob('*').reverse_each { |file| puts file }
+  end
+
   def display_except_hides
     Dir.glob('*').map { |file| puts file }
   end
