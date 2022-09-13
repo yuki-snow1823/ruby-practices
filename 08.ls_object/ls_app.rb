@@ -11,23 +11,8 @@ class LsApp
     @dir = current_dir
   end
 
-  def correct_option?(arg)
-    args = arg.split('')
-    message = if args[0] != '-'
-                'オプションの指定方法が間違っています。'
-              elsif args.length > 4
-                '多すぎるオプションが指定されました。'
-              # TODO: まだバリデーションできていない
-              elsif !arg.match(/a|r|l/)
-                'オプションに指定できない文字が含まれています。'
-              end
-    raise ArgumentError, message if message
-
-    args.shift
-    args
-  end
-
   def display_all
+    # 列幅定数
     file_count_per_line = Dir.foreach('.').count / 3
     linefeed_count = 0
     lines = []
@@ -44,8 +29,11 @@ class LsApp
     end
 
     # TODO: 割り切れない場合にエラーが出る。そもそもこの実装方針で良いのか?
+    # ここでは二次元配列を返す。他も同様に。
+    # ljustに一番長い文字のlength+2くらいで揃えてもいいかも（先にやる）
+
     output_lines.transpose.each do |l|
-      puts l.join('     ')
+      puts l.join('          ')
     end
   end
 
@@ -70,7 +58,26 @@ class LsApp
       size = stat.size
       modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
       # TODO: ファイルサイズの右寄せできていないls
+      # 一番大きいブロックの文字数
       puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name}  #{size.to_s.rjust(4)} #{modified_time} #{file} #{stat.blocks}"
     end
+  end
+
+  private
+
+  def correct_option?(arg)
+    args = arg.split('')
+    message = if args[0] != '-'
+                'オプションの指定方法が間違っています。'
+              elsif args.length > 4
+                '多すぎるオプションが指定されました。'
+              # TODO: まだバリデーションできていない
+              elsif !arg.match(/a|r|l/)
+                'オプションに指定できない文字が含まれています。'
+              end
+    raise ArgumentError, message if message
+
+    args.shift
+    args
   end
 end
