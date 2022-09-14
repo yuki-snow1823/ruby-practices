@@ -13,7 +13,7 @@ case options
 when %w[a l r]
   puts 'aaa1'
 when %w[a r]
-  puts 'aaa2'
+  ls_app.display_all_reverse.each { |l| puts l.join('') }
 when %w[a l]
   ls_app.display_all_details.each { |l| puts l }
 when %w[l r]

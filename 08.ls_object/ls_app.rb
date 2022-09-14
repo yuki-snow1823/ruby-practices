@@ -40,6 +40,33 @@ class LsApp
     output_lines.transpose
   end
 
+  def display_all_reverse
+    file_count_per_column = Dir.foreach('.').count.fdiv(NUMBER_OF_COLUMNS).round
+    max_file_name_count = Dir.foreach('.').max_by(&:length).length
+    linefeed_count = 0
+    lines = []
+    output_lines = []
+    i = 0
+    Dir.foreach('.').reverse_each do |file_name|
+      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
+      linefeed_count += 1
+      # ループの最後に行列の数がずれないようにnilをセットする
+      if Dir.foreach('.').count - 1 == i && linefeed_count != file_count_per_column
+        # 絶対値にすることでファイルが3つ未満の時にも対応
+        (output_lines[0].count - lines.count).abs.times { lines << '' }
+        output_lines << lines
+      end
+      i += 1
+      next unless linefeed_count == file_count_per_column
+
+      output_lines << lines
+      lines = []
+      linefeed_count = 0
+    end
+
+    output_lines.transpose
+  end
+
   def display_reverse
     file_count_per_column = Dir.glob('*').count.fdiv(NUMBER_OF_COLUMNS).round
     max_file_name_count = Dir.glob('*').max_by(&:length).length
