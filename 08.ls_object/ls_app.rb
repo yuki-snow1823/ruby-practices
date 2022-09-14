@@ -155,6 +155,18 @@ class LsApp
     detail_lines.reverse
   end
 
+  def display_all_details_reverse
+    max_file_name_count = Dir.foreach('.').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
+    max_nlink_count = Dir.foreach('.').map { |file| File.stat(file).nlink.to_s }.max_by(&:length).length
+    puts "total #{Dir.foreach('.').map { |file| File.stat(file).blocks }.sum}"
+
+    detail_lines = []
+    Dir.foreach('.') do |file|
+      detail_lines << create_file_detail_line(file, max_nlink_count, max_file_name_count)
+    end
+    detail_lines.reverse
+  end
+
   private
 
   def create_file_detail_line(file, max_nlink_count, max_file_name_count)

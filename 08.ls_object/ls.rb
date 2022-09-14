@@ -11,7 +11,7 @@ options = ls_app.options.sort unless ls_app.options.nil?
 
 case options
 when %w[a l r]
-  puts 'aaa1'
+  ls_app.display_all_details_reverse.each { |l| puts l }
 when %w[a r]
   ls_app.display_all_reverse.each { |l| puts l.join('') }
 when %w[a l]
