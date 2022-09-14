@@ -6,6 +6,7 @@ class LsApp
   attr_reader :options, :dir
 
   NUMBER_OF_COLUMNS = 3
+  NUMBER_OF_MARGIN = 10
 
   def initialize(arg, current_dir)
     @options = arg ? correct_option?(arg) : nil
@@ -21,7 +22,7 @@ class LsApp
     output_lines = []
 
     Dir.foreach('.').each_with_index do |file_name, i|
-      lines << file_name.ljust(max_file_name_count, ' ')
+      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
       linefeed_count += 1
       # ループの最後に行列の数がずれないようにnilをセットする
       if Dir.foreach('.').count - 1 == i && linefeed_count != file_count_per_column
@@ -40,11 +41,55 @@ class LsApp
   end
 
   def display_reverse
-    Dir.glob('*').reverse_each { |file| puts file }
+    file_count_per_column = Dir.glob('*').count.fdiv(NUMBER_OF_COLUMNS).round
+    max_file_name_count = Dir.glob('*').max_by(&:length).length
+    linefeed_count = 0
+    lines = []
+    output_lines = []
+
+    Dir.glob('*').reverse.each_with_index do |file_name, i|
+      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
+      linefeed_count += 1
+      # ループの最後に行列の数がずれないようにnilをセットする
+      if Dir.glob('*').count - 1 == i && linefeed_count != file_count_per_column
+        # 絶対値にすることでファイルが3つ未満の時にも対応
+        (output_lines[0].count - lines.count).abs.times { lines << '' }
+        output_lines << lines
+      end
+      next unless linefeed_count == file_count_per_column
+
+      output_lines << lines
+      lines = []
+      linefeed_count = 0
+    end
+
+    output_lines.transpose
   end
 
   def display_except_hides
-    Dir.glob('*').map { |file| puts file }
+    file_count_per_column = Dir.glob('*').count.fdiv(NUMBER_OF_COLUMNS).round
+    max_file_name_count = Dir.glob('*').max_by(&:length).length
+    linefeed_count = 0
+    lines = []
+    output_lines = []
+
+    Dir.glob('*').each_with_index do |file_name, i|
+      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
+      linefeed_count += 1
+      # ループの最後に行列の数がずれないようにnilをセットする
+      if Dir.glob('*').count - 1 == i && linefeed_count != file_count_per_column
+        # 絶対値にすることでファイルが3つ未満の時にも対応
+        (output_lines[0].count - lines.count).abs.times { lines << '' }
+        output_lines << lines
+      end
+      next unless linefeed_count == file_count_per_column
+
+      output_lines << lines
+      lines = []
+      linefeed_count = 0
+    end
+
+    output_lines.transpose
   end
 
   def display_details
