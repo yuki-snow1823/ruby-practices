@@ -96,7 +96,7 @@ class LsApp
     max_file_name_count = Dir.glob('*').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
     puts "total #{Dir.glob('*').map { |file| File.stat(file).blocks }.sum}"
 
-    arr = []
+    detail_lines = []
     Dir.glob('*') do |file|
       stat = File.stat(file)
       file_type = FileConverter.file_type_to_str(stat.mode)
@@ -106,9 +106,9 @@ class LsApp
       group_name = FileConverter.gid_to_group_name(stat.gid)
       size = stat.size.to_s.rjust(max_file_name_count, ' ')
       modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
-      arr << "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name} #{size} #{modified_time} #{file}"
+      detail_lines << "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name} #{size} #{modified_time} #{file}"
     end
-    arr
+    detail_lines
   end
 
   private
