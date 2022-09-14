@@ -24,7 +24,7 @@ options = ls_app.options
 
 case options
 when ['a']
-  ls_app.display_all.each {|l| puts l.join('') }
+  ls_app.display_all.each { |l| puts l.join('') }
 when ['r']
   ls_app.display_reverse
 when ['l']

@@ -48,6 +48,7 @@ class LsApp
   end
 
   def display_details
+    max_file_name_count = Dir.glob('*').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
     puts "total #{Dir.glob('*').map { |file| File.stat(file).blocks }.sum}"
 
     Dir.glob('*') do |file|
@@ -57,11 +58,9 @@ class LsApp
       nlink = stat.nlink
       user_name = FileConverter.uid_to_user_name(stat.uid)
       group_name = FileConverter.gid_to_group_name(stat.gid)
-      size = stat.size
+      size = stat.size.to_s.rjust(max_file_name_count, ' ')
       modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
-      # TODO: ファイルサイズの右寄せできていないls
-      # 一番大きいブロックの文字数
-      puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name}  #{size.to_s.rjust(4)} #{modified_time} #{file} #{stat.blocks}"
+      puts "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name} #{size} #{modified_time} #{file} #{stat.blocks}"
     end
   end
 
