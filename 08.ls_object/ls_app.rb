@@ -36,9 +36,7 @@ class LsApp
       linefeed_count = 0
     end
 
-    output_lines.transpose.each do |l|
-      puts l.join('')
-    end
+    output_lines.transpose
   end
 
   def display_reverse
