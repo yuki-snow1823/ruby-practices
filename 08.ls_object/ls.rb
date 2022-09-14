@@ -5,7 +5,9 @@ require_relative './ls_app'
 
 ls_app = LsApp.new(ARGV[0], Dir.pwd)
 
-options = ls_app.options.sort
+options = ls_app.options.sort unless ls_app.options.nil?
+
+# 共通部分見つける
 
 case options
 when %w[a l r]
