@@ -17,7 +17,7 @@ class FileConverter
   FILE_TYPE_MAP = {
     '01' => 'p',
     '02' => 'c',
-    '04' => 'd',
+    '40' => 'd',
     '06' => 'b',
     '10' => '-',
     '12' => 'l',
@@ -25,7 +25,11 @@ class FileConverter
   }.freeze
 
   def self.mode_to_str(mode)
-    octal_number_permission = mode.to_s(8).slice(3..5).split('')
+    octal_number_permission = if mode.to_s(8).slice(0..1) == '40'
+                                mode.to_s(8).slice(1..3).split('')
+                              else
+                                mode.to_s(8).slice(3..5).split('')
+                              end
     octal_number_permission.map! { |num| PERMISSION_MAP[num] }
     octal_number_permission.join
   end
