@@ -9,12 +9,12 @@ options = ls_app.options.sort
 
 case options
 when %w[a l r]
-  puts 'aaa'
+  puts 'aaa1'
 when %w[a r]
-  puts 'aaa'
+  puts 'aaa2'
 when %w[a l]
-  puts 'aaa'
-when %w[r l]
+  puts 'aaa3'
+when %w[l r]
   puts 'aaa'
 when ['a']
   ls_app.display_all.each { |l| puts l.join('') }
