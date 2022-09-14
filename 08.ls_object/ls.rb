@@ -23,7 +23,7 @@ when ['a']
 when ['r']
   ls_app.display_reverse.each { |l| puts l.join('') }
 when ['l']
-  ls_app.display_details
+  ls_app.display_details.each { |l| puts l }
 else
   ls_app.display_except_hides.each { |l| puts l.join('') }
 end
