@@ -5,6 +5,8 @@ require_relative './file_converter'
 class LsApp
   attr_reader :options, :dir
 
+  NUMBER_OF_COLUMNS = 3
+
   def initialize(arg, current_dir)
     @options = arg ? correct_option?(arg) : nil
     # TODO: 歓迎要件
@@ -12,28 +14,30 @@ class LsApp
   end
 
   def display_all
-    # 列幅定数
-    file_count_per_line = Dir.foreach('.').count / 3
+    file_count_per_column = Dir.foreach('.').count.fdiv(NUMBER_OF_COLUMNS).round
+    max_file_name_count = Dir.foreach('.').max_by(&:length).length
     linefeed_count = 0
     lines = []
     output_lines = []
 
-    Dir.foreach('.').each do |file|
+    Dir.foreach('.').each_with_index do |file_name, i|
+      lines << file_name.ljust(max_file_name_count, ' ')
       linefeed_count += 1
-      lines << file
-      next unless linefeed_count == file_count_per_line
+      # ループの最後に行列の数がずれないようにnilをセットする
+      if Dir.foreach('.').count - 1 == i && linefeed_count != file_count_per_column
+        # 絶対値にすることでファイルが3つ未満の時にも対応
+        (output_lines[0].count - lines.count).abs.times { lines << '' }
+        output_lines << lines
+      end
+      next unless linefeed_count == file_count_per_column
 
       output_lines << lines
       lines = []
       linefeed_count = 0
     end
 
-    # TODO: 割り切れない場合にエラーが出る。そもそもこの実装方針で良いのか?
-    # ここでは二次元配列を返す。他も同様に。
-    # ljustに一番長い文字のlength+2くらいで揃えてもいいかも（先にやる）
-
     output_lines.transpose.each do |l|
-      puts l.join('          ')
+      puts l.join('')
     end
   end
 
