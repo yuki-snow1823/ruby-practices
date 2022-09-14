@@ -13,9 +13,9 @@ when %w[a l r]
 when %w[a r]
   puts 'aaa2'
 when %w[a l]
-  puts 'aaa3'
+  ls_app.display_all_details.each { |l| puts l }
 when %w[l r]
-  puts 'aaa'
+  ls_app.display_details_reverse.each { |l| puts l }
 when ['a']
   ls_app.display_all.each { |l| puts l.join('') }
 when ['r']

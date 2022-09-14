@@ -111,6 +111,25 @@ class LsApp
     detail_lines
   end
 
+  def display_details_reverse
+    max_file_name_count = Dir.glob('*').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
+    puts "total #{Dir.glob('*').map { |file| File.stat(file).blocks }.sum}"
+
+    detail_lines = []
+    Dir.glob('*') do |file|
+      stat = File.stat(file)
+      file_type = FileConverter.file_type_to_str(stat.mode)
+      permission = FileConverter.mode_to_str(stat.mode)
+      nlink = stat.nlink
+      user_name = FileConverter.uid_to_user_name(stat.uid)
+      group_name = FileConverter.gid_to_group_name(stat.gid)
+      size = stat.size.to_s.rjust(max_file_name_count, ' ')
+      modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
+      detail_lines << "#{file_type}#{permission}  #{nlink} #{user_name}  #{group_name} #{size} #{modified_time} #{file}"
+    end
+    detail_lines.reverse
+  end
+
   private
 
   def correct_option?(arg)
