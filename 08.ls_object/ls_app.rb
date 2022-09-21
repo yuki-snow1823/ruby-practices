@@ -1,201 +1,65 @@
 # frozen_string_literal: true
 
-require_relative './file_converter'
+require_relative './ls_file'
 
 class LsApp
-  attr_reader :options, :dir
-
   NUMBER_OF_COLUMNS = 3
-  NUMBER_OF_MARGIN = 10
+  NUMBER_OF_MARGIN = 20
 
-  def initialize(arg, current_dir)
-    @options = arg ? correct_option?(arg) : nil
-    # TODO: 歓迎要件
-    @dir = current_dir
+  def initialize(input_options)
+    @input_options = input_options
+    @options = options
+    @files = generate_files
+    @files.reverse! if @options&.include?('r')
   end
 
-  def display_all
-    file_count_per_column = Dir.foreach('.').count.fdiv(NUMBER_OF_COLUMNS).round
-    max_file_name_count = Dir.foreach('.').max_by(&:length).length
-    linefeed_count = 0
-    lines = []
-    output_lines = []
-
-    Dir.foreach('.').each_with_index do |file_name, i|
-      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
-      linefeed_count += 1
-      # ループの最後に行列の数がずれないようにnilをセットする
-      if Dir.foreach('.').count - 1 == i && linefeed_count != file_count_per_column
-        # 絶対値にすることでファイルが3つ未満の時にも対応
-        (output_lines[0].count - lines.count).abs.times { lines << '' }
-        output_lines << lines
-      end
-      next unless linefeed_count == file_count_per_column
-
-      output_lines << lines
-      lines = []
-      linefeed_count = 0
+  def run
+    if @options&.include?('l')
+      display_long
+    else
+      display_short
     end
-
-    output_lines.transpose
-  end
-
-  def display_all_reverse
-    file_count_per_column = Dir.foreach('.').count.fdiv(NUMBER_OF_COLUMNS).round
-    max_file_name_count = Dir.foreach('.').max_by(&:length).length
-    linefeed_count = 0
-    lines = []
-    output_lines = []
-    i = 0
-    Dir.foreach('.').reverse_each do |file_name|
-      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
-      linefeed_count += 1
-      # ループの最後に行列の数がずれないようにnilをセットする
-      if Dir.foreach('.').count - 1 == i && linefeed_count != file_count_per_column
-        # 絶対値にすることでファイルが3つ未満の時にも対応
-        (output_lines[0].count - lines.count).abs.times { lines << '' }
-        output_lines << lines
-      end
-      i += 1
-      next unless linefeed_count == file_count_per_column
-
-      output_lines << lines
-      lines = []
-      linefeed_count = 0
-    end
-
-    output_lines.transpose
-  end
-
-  def display_reverse
-    file_count_per_column = Dir.glob('*').count.fdiv(NUMBER_OF_COLUMNS).round
-    max_file_name_count = Dir.glob('*').max_by(&:length).length
-    linefeed_count = 0
-    lines = []
-    output_lines = []
-
-    Dir.glob('*').reverse.each_with_index do |file_name, i|
-      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
-      linefeed_count += 1
-      # ループの最後に行列の数がずれないようにnilをセットする
-      if Dir.glob('*').count - 1 == i && linefeed_count != file_count_per_column
-        # 絶対値にすることでファイルが3つ未満の時にも対応
-        (output_lines[0].count - lines.count).abs.times { lines << '' }
-        output_lines << lines
-      end
-      next unless linefeed_count == file_count_per_column
-
-      output_lines << lines
-      lines = []
-      linefeed_count = 0
-    end
-
-    output_lines.transpose
-  end
-
-  def display_except_hides
-    file_count_per_column = Dir.glob('*').count.fdiv(NUMBER_OF_COLUMNS).round
-    max_file_name_count = Dir.glob('*').max_by(&:length).length
-    linefeed_count = 0
-    lines = []
-    output_lines = []
-
-    Dir.glob('*').each_with_index do |file_name, i|
-      lines << file_name.ljust(max_file_name_count + NUMBER_OF_MARGIN, ' ')
-      linefeed_count += 1
-      # ループの最後に行列の数がずれないようにnilをセットする
-      if Dir.glob('*').count - 1 == i && linefeed_count != file_count_per_column
-        # 絶対値にすることでファイルが3つ未満の時にも対応
-        (output_lines[0].count - lines.count).abs.times { lines << '' }
-        output_lines << lines
-      end
-      next unless linefeed_count == file_count_per_column
-
-      output_lines << lines
-      lines = []
-      linefeed_count = 0
-    end
-
-    output_lines.transpose
-  end
-
-  def display_details
-    max_file_name_count = Dir.glob('*').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
-    max_nlink_count = Dir.glob('*').map { |file| File.stat(file).nlink.to_s }.max_by(&:length).length
-    puts "total #{Dir.glob('*').map { |file| File.stat(file).blocks }.sum}"
-
-    detail_lines = []
-    Dir.glob('*') do |file|
-      detail_lines << create_file_detail_line(file, max_nlink_count, max_file_name_count)
-    end
-    detail_lines
-  end
-
-  def display_all_details
-    max_file_name_count = Dir.foreach('.').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
-    max_nlink_count = Dir.foreach('.').map { |file| File.stat(file).nlink.to_s }.max_by(&:length).length
-    puts "total #{Dir.foreach('.').map { |file| File.stat(file).blocks }.sum}"
-
-    detail_lines = []
-    Dir.foreach('.') do |file|
-      detail_lines << create_file_detail_line(file, max_nlink_count, max_file_name_count)
-    end
-    detail_lines
-  end
-
-  def display_details_reverse
-    max_file_name_count = Dir.glob('*').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
-    max_nlink_count = Dir.glob('*').map { |file| File.stat(file).nlink.to_s }.max_by(&:length).length
-    puts "total #{Dir.glob('*').map { |file| File.stat(file).blocks }.sum}"
-
-    detail_lines = []
-    Dir.glob('*') do |file|
-      detail_lines << create_file_detail_line(file, max_nlink_count, max_file_name_count)
-    end
-    detail_lines.reverse
-  end
-
-  def display_all_details_reverse
-    max_file_name_count = Dir.foreach('.').map { |file| File.stat(file).size.to_s }.max_by(&:length).length
-    max_nlink_count = Dir.foreach('.').map { |file| File.stat(file).nlink.to_s }.max_by(&:length).length
-    puts "total #{Dir.foreach('.').map { |file| File.stat(file).blocks }.sum}"
-
-    detail_lines = []
-    Dir.foreach('.') do |file|
-      detail_lines << create_file_detail_line(file, max_nlink_count, max_file_name_count)
-    end
-    detail_lines.reverse
   end
 
   private
 
-  def create_file_detail_line(file, max_nlink_count, max_file_name_count)
-    stat = File.stat(file)
-    detail_lines = []
-    file_type = FileConverter.file_type_to_str(stat.mode)
-    permission = FileConverter.mode_to_str(stat.mode)
-    nlink = stat.nlink.to_s.rjust(max_nlink_count, ' ')
-    user_name = FileConverter.uid_to_user_name(stat.uid)
-    group_name = FileConverter.gid_to_group_name(stat.gid)
-    size = stat.size.to_s.rjust(max_file_name_count, ' ')
-    modified_time = FileConverter.mtime_be_correct_format(stat.mtime)
-    detail_lines << "#{file_type}#{permission} #{nlink} #{user_name}  #{group_name} #{size} #{modified_time} #{file}"
-    detail_lines
+  def options
+    @input_options&.split('')&.sort
   end
 
-  def correct_option?(arg)
-    args = arg.split('')
-    message = if args[0] != '-'
-                'オプションの指定方法が間違っています。'
-              elsif args.length > 4
-                '多すぎるオプションが指定されました。'
-              # TODO: まだバリデーションできていない
-              elsif !arg.match(/a|r|l/)
-                'オプションに指定できない文字が含まれています。'
-              end
-    raise ArgumentError, message if message
+  def generate_files
+    if @options&.include?('a')
+      Dir.foreach('.').map { |file_name| LsFile.new(File.stat(file_name), file_name) }
+    else
+      Dir.glob('*').map { |file_name| LsFile.new(File.stat(file_name), file_name) }
+    end
+  end
 
-    args.shift
-    args
+  def display_long
+    @files.each do |file|
+      puts "#{file.type}#{file.permission} #{file.nlink.to_s.rjust(max_nlink_count, ' ')} #{file.owner}  #{file.group} #{file.block_size.to_s.rjust(2, ' ')} #{file.modified_time} #{file.name}"
+    end
+  end
+
+  def display_short
+    file_names = []
+    all_file = []
+    @files.each_with_index do |file, i|
+      file_names << file.name.ljust(NUMBER_OF_MARGIN, ' ')
+      if ((i + 1) % NUMBER_OF_COLUMNS).zero?
+        all_file << file_names
+        file_names = []
+      end
+    end
+    all_file << file_names unless file_names.empty?
+    all_file.map { |file| puts file.join }
+  end
+
+  def max_file_size_count
+    @files.map { |file| file.block_size.to_s }.max_by(&:length).length
+  end
+
+  def max_nlink_count
+    @files.map { |file| file.nlink.to_s }.max_by(&:length).length
   end
 end
