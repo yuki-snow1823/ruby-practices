@@ -38,13 +38,13 @@ class LsApp
   def display_long
     @files.each do |file|
       output = []
-      output << "#{file.type}#{file.permission}" 
-      output << "#{file.nlink.to_s.rjust(max_nlink_count,' ')}"
-      output << "#{file.owner}" 
-      output << "#{file.group}"
-      output << "#{file.size.to_s.rjust(max_file_size_count,' ')}"
-      output << "#{file.modified_time}"
-      output << "#{file.name}"
+      output << "#{file.type}#{file.permission}"
+      output << file.nlink.to_s.rjust(max_nlink_count, ' ').to_s
+      output << file.owner.to_s
+      output << file.group.to_s
+      output << file.size.to_s.rjust(max_file_size_count, ' ').to_s
+      output << file.modified_time.to_s
+      output << file.name.to_s
       puts output.join(' ')
     end
   end
