@@ -9,7 +9,7 @@ class LsApp
   def initialize(input_options)
     @input_options = input_options
     @options = options
-    @files = generate_files
+    @files = generate_ls_files
     @files.reverse! if @options&.include?('r')
   end
 
@@ -27,7 +27,7 @@ class LsApp
     @input_options&.split('')&.sort
   end
 
-  def generate_files
+  def generate_ls_files
     if @options&.include?('a')
       Dir.foreach('.').map { |file_name| LsFile.new(file_name) }
     else
