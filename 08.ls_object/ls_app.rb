@@ -60,7 +60,7 @@ class LsApp
       end
     end
     all_file << file_names unless file_names.empty?
-    all_file.map { |file| puts file.join }
+    all_file.each { |file| puts file.join }
   end
 
   def max_file_size_count
