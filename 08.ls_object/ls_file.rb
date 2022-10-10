@@ -32,6 +32,10 @@ class LsFile
     @file_stat.size
   end
 
+  def blocks
+    @file_stat.blocks
+  end
+
   def nlink
     @file_stat.nlink
   end
