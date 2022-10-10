@@ -52,16 +52,16 @@ class LsApp
 
   def display_short
     file_names = []
-    all_file = []
+    all_files = []
     @files.each_with_index do |file, i|
       file_names << file.name.ljust(NUMBER_OF_MARGIN, ' ')
       if ((i + 1) % NUMBER_OF_COLUMNS).zero?
-        all_file << file_names
+        all_files << file_names
         file_names = []
       end
     end
-    all_file << file_names unless file_names.empty?
-    all_file.each { |file| puts file.join }
+    all_files << file_names unless file_names.empty?
+    all_files.each { |file| puts file.join }
   end
 
   def max_file_size_count
