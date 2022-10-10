@@ -65,16 +65,12 @@ class LsApp
   end
 
   def max_file_size_count
-    @files.map do |file|
-      # sleep 1
-      file.file_stat.blksize.to_s.split('')
-    end.max_by(&:length).length
+    file_name_count = @files.map { |file| file.file_stat.blksize.to_s.split('').size }
+    file_name_count.max
   end
 
   def max_nlink_count
-    @files.map do |file|
-      # sleep 1
-      file.file_stat.nlink.to_s
-    end.max_by(&:length).length
+    file_nlink_count = @files.map { |file| file.file_stat.nlink.to_s.split('').size }
+    file_nlink_count.max
   end
 end
