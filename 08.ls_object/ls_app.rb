@@ -10,7 +10,7 @@ class LsApp
     @input_options = input_options
     @options = options
     @files = generate_ls_files
-    @files.reverse! if @options&.include?('r')
+    @files = @files.reverse if @options&.include?('r')
   end
 
   def run
