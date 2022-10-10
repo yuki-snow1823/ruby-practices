@@ -31,7 +31,7 @@ class LsApp
   end
 
   def display_long
-    puts "total #{@files.map{|file| file.blocks }.inject(:+)}"
+    puts "total #{@files.map { |file| file.blocks }.inject(:+)}"
     @files.each do |file|
       output = []
       output << "#{file.type}#{file.permission}"
