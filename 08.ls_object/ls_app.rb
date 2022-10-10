@@ -37,7 +37,9 @@ class LsApp
 
   def display_long
     @files.each do |file|
-      puts "#{file.type}#{file.permission} #{file.nlink.to_s.rjust(max_nlink_count, ' ')} #{file.owner} #{file.group} #{file.size.to_s.rjust(max_file_size_count, ' ')} #{file.modified_time} #{file.name}"
+      puts "#{file.type}#{file.permission} #{file.nlink.to_s.rjust(max_nlink_count,
+                                                                   ' ')} #{file.owner} #{file.group} #{file.size.to_s.rjust(max_file_size_count,
+                                                                                                                            ' ')} #{file.modified_time} #{file.name}"
     end
   end
 
@@ -56,16 +58,16 @@ class LsApp
   end
 
   def max_file_size_count
-    @files.map { |file| 
+    @files.map do |file|
       # sleep 1
       file.file_stat.blksize.to_s.split('')
-    }.max_by(&:length).length
+    end.max_by(&:length).length
   end
 
   def max_nlink_count
-    @files.map { |file|
+    @files.map do |file|
       # sleep 1
       file.file_stat.nlink.to_s
-     }.max_by(&:length).length
+    end.max_by(&:length).length
   end
 end

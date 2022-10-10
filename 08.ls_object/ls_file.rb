@@ -6,6 +6,8 @@ require 'etc'
 class LsFile
   attr_reader :name, :file_stat
 
+  DIRECTORY_NUMBER = '40'
+
   def initialize(file_name)
     @name = file_name
     @file_stat = File.stat(file_name)
@@ -17,7 +19,7 @@ class LsFile
 
   def permission
     permission = @file_stat.mode
-    permission = if permission.to_s(8).slice(0..1) == '40'
+    permission = if permission.to_s(8).slice(0..1) == DIRECTORY_NUMBER
                    permission.to_s(8).slice(1..3).split('')
                  else
                    permission.to_s(8).slice(3..5).split('')
