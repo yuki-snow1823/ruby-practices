@@ -36,8 +36,8 @@ class LsApp
       output = []
       output << "#{file.type}#{file.permission}"
       output << file.nlink.to_s.rjust(max_nlink_count, ' ').to_s
-      output << file.owner.to_s
-      output << file.group.to_s
+      output << file.owner.to_s.rjust(max_owner_count, ' ').to_s
+      output << file.group.to_s.rjust(max_group_count, ' ').to_s
       output << file.size.to_s.rjust(max_file_size_count, ' ').to_s
       output << file.modified_time.to_s
       output << file.name.to_s
@@ -59,13 +59,23 @@ class LsApp
     all_files.each { |file| puts file.join }
   end
 
+  def max_group_count
+    group_count = @files.map { |file| file.group.to_s.split('').size }
+    group_count.max
+  end
+
+  def max_owner_count
+    owner_count = @files.map { |file| file.owner.to_s.split('').size }
+    owner_count.max
+  end
+
   def max_file_size_count
-    file_name_count = @files.map { |file| file.file_stat.blksize.to_s.split('').size }
+    file_name_count = @files.map { |file| file.blksize.to_s.split('').size }
     file_name_count.max
   end
 
   def max_nlink_count
-    file_nlink_count = @files.map { |file| file.file_stat.nlink.to_s.split('').size }
+    file_nlink_count = @files.map { |file| file.nlink.to_s.split('').size }
     file_nlink_count.max
   end
 end

@@ -36,6 +36,10 @@ class LsFile
     @file_stat.blocks
   end
 
+  def blksize
+    @file_stat.blksize
+  end
+
   def nlink
     @file_stat.nlink
   end
