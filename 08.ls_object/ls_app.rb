@@ -8,7 +8,7 @@ class LsApp
 
   def initialize(input_options)
     @options = input_options
-    @files = generate_ls_files
+    @files = generate_ls_files.sort_by{|f| f.name }
     @files = @files.reverse if @options['r']
   end
 
