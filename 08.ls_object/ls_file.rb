@@ -4,26 +4,19 @@ require_relative './file_detail_map'
 require 'etc'
 
 class LsFile
-  attr_reader :name, :nlink, :block_size
+  attr_reader :name, :file_stat
 
-  def initialize(file_stat, name)
-    @name = name
-    @octal_number_type = file_stat.mode
-    @octal_number_permission = file_stat.mode
-    @nlink = file_stat.nlink
-    @block_size = file_stat.size
-    @owner_id = file_stat.uid
-    @stat_modified_time = file_stat.mtime
-    @group_id = file_stat.gid
+  def initialize(file_name)
+    @name = file_name
+    @file_stat = File.stat(file_name)
   end
 
   def type
-    octal_number_type = @octal_number_type
-    TYPE_MAP[octal_number_type.to_s(8).slice(0..1)]
+    TYPE_MAP[@file_stat.mode.to_s(8).slice(0..1)]
   end
 
   def permission
-    permission = @octal_number_permission
+    permission = @file_stat.mode
     permission = if permission.to_s(8).slice(0..1) == '40'
                    permission.to_s(8).slice(1..3).split('')
                  else
@@ -34,14 +27,14 @@ class LsFile
   end
 
   def owner
-    Etc.getpwuid(@owner_id).name
+    Etc.getpwuid(@file_stat.uid).name
   end
 
   def group
-    Etc.getgrgid(@group_id).name
+    Etc.getgrgid(@file_stat.gid).name
   end
 
   def modified_time
-    @stat_modified_time.strftime('%b %e %H:%M')
+    @file_stat.mtime.strftime('%b %e %H:%M')
   end
 end

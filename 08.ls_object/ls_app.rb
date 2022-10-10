@@ -29,16 +29,16 @@ class LsApp
 
   def generate_files
     if @options&.include?('a')
-      Dir.foreach('.').map { |file_name| LsFile.new(File.stat(file_name), file_name) }
+      Dir.foreach('.').map { |file_name| LsFile.new(file_name) }
     else
-      Dir.glob('*').map { |file_name| LsFile.new(File.stat(file_name), file_name) }
+      Dir.glob('*').map { |file_name| LsFile.new(file_name) }
     end
   end
 
   def display_long
     @files.each do |file|
-      puts "#{file.type}#{file.permission} #{file.nlink.to_s.rjust(max_nlink_count, ' ')} #{file.owner}  \
-#{file.group} #{file.block_size.to_s.rjust(max_file_size_count, ' ')} #{file.modified_time} #{file.name}"
+      puts "#{file.type}#{file.permission} #{file.file_stat.nlink.to_s.rjust(max_nlink_count, ' ')} #{file.owner}  \
+#{file.group} #{file.file_stat.blksize.to_s.rjust(max_file_size_count, ' ')} #{file.modified_time} #{file.name}"
     end
   end
 
@@ -57,10 +57,16 @@ class LsApp
   end
 
   def max_file_size_count
-    @files.map { |file| file.block_size.to_s.split('') }.max_by(&:length).length
+    @files.map { |file| 
+      # sleep 1
+      file.file_stat.blksize.to_s.split('')
+    }.max_by(&:length).length
   end
 
   def max_nlink_count
-    @files.map { |file| file.nlink.to_s }.max_by(&:length).length
+    @files.map { |file|
+      # sleep 1
+      file.file_stat.nlink.to_s
+     }.max_by(&:length).length
   end
 end
