@@ -27,7 +27,7 @@ class LsFile
   end
 
   def size
-    @file_stat.blksize
+    @file_stat.size
   end
 
   def nlink
