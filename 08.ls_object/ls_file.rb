@@ -26,6 +26,14 @@ class LsFile
     permission.join
   end
 
+  def size
+    @file_stat.blksize
+  end
+
+  def nlink
+    @file_stat.nlink
+  end
+
   def owner
     Etc.getpwuid(@file_stat.uid).name
   end
