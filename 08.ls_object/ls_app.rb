@@ -35,13 +35,19 @@ class LsApp
 
   def display_long
     puts "total #{@ls_files.map(&:blocks).sum}"
+    nlink_count = max_nlink_count
+    owner_count = max_owner_count
+    group_count = max_group_count
+    ls_file_size_count = max_ls_file_size_count
+
     @ls_files.each do |ls_file|
       output = []
       output << "#{ls_file.type}#{ls_file.permission} "
-      output << ls_file.nlink.to_s.rjust(max_nlink_count)
-      output << ls_file.owner.to_s.rjust(max_owner_count)
-      output << ls_file.group.to_s.rjust(max_group_count)
-      output << " #{ls_file.size.to_s.rjust(max_ls_file_size_count)}"
+      # こいつらを外へ 最大数を毎回考えなくていい
+      output << ls_file.nlink.to_s.rjust(nlink_count)
+      output << ls_file.owner.to_s.rjust(owner_count)
+      output << ls_file.group.to_s.rjust(group_count)
+      output << " #{ls_file.size.to_s.rjust(ls_file_size_count)}"
       output << ls_file.modified_time.to_s
       output << ls_file.name.to_s
       puts output.join(' ')
