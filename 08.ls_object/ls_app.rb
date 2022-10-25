@@ -52,7 +52,7 @@ class LsApp
     file_names = []
     all_files = []
     @ls_files.each_with_index do |file, i|
-      file_names << file.name.ljust(NUMBER_OF_MARGIN, ' ')
+      file_names << file.name.ljust(NUMBER_OF_MARGIN)
       if ((i + 1) % NUMBER_OF_COLUMNS).zero?
         all_files << file_names
         file_names = []
