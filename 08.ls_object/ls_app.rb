@@ -43,7 +43,6 @@ class LsApp
     @ls_files.each do |ls_file|
       output = []
       output << "#{ls_file.type}#{ls_file.permission} "
-      # こいつらを外へ 最大数を毎回考えなくていい
       output << ls_file.nlink.to_s.rjust(nlink_count)
       output << ls_file.owner.to_s.ljust(owner_count)
       output << ls_file.group.to_s.ljust(group_count)
