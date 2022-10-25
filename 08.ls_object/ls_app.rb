@@ -86,7 +86,7 @@ class LsApp
   end
 
   def max_ls_file_size_count
-    file_name_count = @ls_files.map { |file| file.blksize.to_s.split('').size }
+    file_name_count = @ls_files.map { |file| file.size.to_s.split('').size }
     file_name_count.max
   end
 
