@@ -34,11 +34,11 @@ class LsApp
     puts "total #{@files.map { |file| file.blocks }.inject(:+)}"
     @files.each do |file|
       output = []
-      output << "#{file.type}#{file.permission}"
+      output << "#{file.type}#{file.permission} "
       output << file.nlink.to_s.rjust(max_nlink_count, ' ').to_s
       output << file.owner.to_s.rjust(max_owner_count, ' ').to_s
       output << file.group.to_s.rjust(max_group_count, ' ').to_s
-      output << file.size.to_s.rjust(max_file_size_count, ' ').to_s
+      output << " #{file.size.to_s.rjust(max_file_size_count, ' ').to_s}"
       output << file.modified_time.to_s
       output << file.name.to_s
       puts output.join(' ')
