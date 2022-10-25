@@ -23,11 +23,13 @@ class LsApp
   private
 
   def generate_ls_files
-    if @input_options['a']
-      Dir.foreach('.').map { |file_name| LsFile.new(file_name) }
-    else
-      Dir.glob('*').map { |file_name| LsFile.new(file_name) }
-    end
+    file_names = 
+      if @input_options['a']
+        Dir.foreach('.')
+      else
+        Dir.glob('*')
+      end
+    file_names.map { |file_name| LsFile.new(file_name) }
   end
 
   def display_long
