@@ -3,8 +3,6 @@
 require 'etc'
 
 class LsFile
-  attr_reader :name, :file_stat
-
   DIRECTORY_NUMBER = '40'
 
   PERMISSION_MAP = {
@@ -27,7 +25,8 @@ class LsFile
     '12' => 'l',
     '14' => 's'
   }.freeze
-  
+
+  attr_reader :name, :file_stat
 
   def initialize(file_name)
     @name = file_name
