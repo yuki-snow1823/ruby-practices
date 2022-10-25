@@ -8,8 +8,8 @@ class LsApp
 
   def initialize(input_options)
     @input_options = input_options
-    @files = generate_ls_files
-    @files = @files.reverse if @input_options['r']
+    @ls_files = generate_ls_files
+    @ls_files = @ls_files.reverse if @input_options['r']
   end
 
   def run
@@ -34,16 +34,16 @@ class LsApp
   end
 
   def display_long
-    puts "total #{@files.map { |file| file.blocks }.sum}"
-    @files.each do |file|
+    puts "total #{@ls_files.map(&:blocks).sum}"
+    @ls_files.each do |ls_file|
       output = []
-      output << "#{file.type}#{file.permission} "
-      output << file.nlink.to_s.rjust(max_nlink_count, ' ').to_s
-      output << file.owner.to_s.rjust(max_owner_count, ' ').to_s
-      output << file.group.to_s.rjust(max_group_count, ' ').to_s
-      output << " #{file.size.to_s.rjust(max_file_size_count, ' ').to_s}"
-      output << file.modified_time.to_s
-      output << file.name.to_s
+      output << "#{ls_file.type}#{ls_file.permission} "
+      output << ls_file.nlink.to_s.rjust(max_nlink_count, ' ').to_s
+      output << ls_file.owner.to_s.rjust(max_owner_count, ' ').to_s
+      output << ls_file.group.to_s.rjust(max_group_count, ' ').to_s
+      output << " #{ls_file.size.to_s.rjust(max_ls_file_size_count, ' ').to_s}"
+      output << ls_file.modified_time.to_s
+      output << ls_file.name.to_s
       puts output.join(' ')
     end
   end
@@ -51,7 +51,7 @@ class LsApp
   def display_short
     file_names = []
     all_files = []
-    @files.each_with_index do |file, i|
+    @ls_files.each_with_index do |file, i|
       file_names << file.name.ljust(NUMBER_OF_MARGIN, ' ')
       if ((i + 1) % NUMBER_OF_COLUMNS).zero?
         all_files << file_names
@@ -70,22 +70,22 @@ class LsApp
   end
 
   def max_group_count
-    group_count = @files.map { |file| file.group.to_s.split('').size }
+    group_count = @ls_files.map { |file| file.group.to_s.split('').size }
     group_count.max
   end
 
   def max_owner_count
-    owner_count = @files.map { |file| file.owner.to_s.split('').size }
+    owner_count = @ls_files.map { |file| file.owner.to_s.split('').size }
     owner_count.max
   end
 
-  def max_file_size_count
-    file_name_count = @files.map { |file| file.blksize.to_s.split('').size }
+  def max_ls_file_size_count
+    file_name_count = @ls_files.map { |file| file.blksize.to_s.split('').size }
     file_name_count.max
   end
 
   def max_nlink_count
-    file_nlink_count = @files.map { |file| file.nlink.to_s.split('').size }
+    file_nlink_count = @ls_files.map { |file| file.nlink.to_s.split('').size }
     file_nlink_count.max
   end
 end
