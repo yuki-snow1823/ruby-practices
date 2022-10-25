@@ -7,13 +7,13 @@ class LsApp
   NUMBER_OF_MARGIN = 20
 
   def initialize(input_options)
-    @options = input_options
+    @input_options = input_options
     @files = generate_ls_files.sort_by{|f| f.name }
-    @files = @files.reverse if @options['r']
+    @files = @files.reverse if @input_options['r']
   end
 
   def run
-    if @options['l']
+    if @input_options['l']
       display_long
     else
       display_short
@@ -23,7 +23,7 @@ class LsApp
   private
 
   def generate_ls_files
-    if @options['a']
+    if @input_options['a']
       Dir.foreach('.').map { |file_name| LsFile.new(file_name) }
     else
       Dir.glob('*').map { |file_name| LsFile.new(file_name) }
