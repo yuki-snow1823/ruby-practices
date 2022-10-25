@@ -44,8 +44,8 @@ class LsApp
       output = []
       output << "#{ls_file.type}#{ls_file.permission} "
       output << ls_file.nlink.to_s.rjust(nlink_count)
-      output << ls_file.owner.to_s.ljust(owner_count)
-      output << ls_file.group.to_s.ljust(group_count)
+      output << "#{ls_file.owner.to_s.ljust(owner_count)} "
+      output << "#{ls_file.group.to_s.ljust(group_count)} "
       output << ls_file.size.to_s.rjust(ls_file_size_count)
       output << ls_file.modified_time.to_s
       output << ls_file.name.to_s
