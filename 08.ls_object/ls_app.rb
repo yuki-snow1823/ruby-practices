@@ -3,8 +3,8 @@
 require_relative './ls_file'
 
 class LsApp
-  NUMBER_OF_COLUMNS = 3
-  NUMBER_OF_MARGIN = 20
+  COLUMNS_COUNT = 3
+  MARGIN_COUNT = 20
 
   def initialize(input_options)
     @input_options = input_options
@@ -52,8 +52,8 @@ class LsApp
     file_names = []
     all_files = []
     @ls_files.each_with_index do |file, i|
-      file_names << file.name.ljust(NUMBER_OF_MARGIN)
-      if ((i + 1) % NUMBER_OF_COLUMNS).zero?
+      file_names << file.name.ljust(MARGIN_COUNT)
+      if ((i + 1) % COLUMNS_COUNT).zero?
         all_files << file_names
         file_names = []
         all_files
