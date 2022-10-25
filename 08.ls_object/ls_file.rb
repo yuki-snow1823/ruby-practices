@@ -73,6 +73,6 @@ class LsFile
   end
 
   def modified_time
-    @file_stat.mtime.strftime('%b %e %H:%M')
+    @file_stat.mtime.strftime('%m %e %H:%M')
   end
 end
