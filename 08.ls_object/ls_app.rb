@@ -12,22 +12,13 @@ class LsApp
   end
 
   def run
-    if @input_options['l']
-      display_long
-    else
-      display_short
-    end
+    @input_options['l'] ? display_long : display_short
   end
 
   private
 
   def generate_ls_files
-    file_names = 
-      if @input_options['a']
-        Dir.foreach('.')
-      else
-        Dir.glob('*')
-      end
+    file_names = @input_options['a'] ? Dir.foreach('.') : Dir.glob('*')
     file_names = file_names.sort.map { |file_name| LsFile.new(file_name) }
     file_names.reverse if @input_options['r']
   end
