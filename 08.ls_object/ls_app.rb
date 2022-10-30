@@ -65,22 +65,23 @@ class LsApp
   end
 
   def max_group_count
-    group_count = @ls_files.map { |file| file.group.to_s.split('').size }
-    group_count.max
+    @ls_files.map { |file| count_text_length(file.group) }.max
   end
 
   def max_owner_count
-    owner_count = @ls_files.map { |file| file.owner.to_s.split('').size }
-    owner_count.max
+    @ls_files.map { |file| count_text_length(file.owner) }.max
   end
 
   def max_ls_file_size_count
-    file_name_count = @ls_files.map { |file| file.size.to_s.split('').size }
-    file_name_count.max
+    @ls_files.map { |file|count_text_length(file.size) }.max
   end
 
   def max_nlink_count
-    file_nlink_count = @ls_files.map { |file| file.nlink.to_s.split('').size }
-    file_nlink_count.max
+    @ls_files.map { |file| count_text_length(file.nlink) }.max
+  end
+
+  private 
+  def count_text_length(file)
+    file.to_s.split('').size
   end
 end
