@@ -57,9 +57,7 @@ class LsApp
     all_files << file_names unless file_names.empty?
 
     # 行列を入れ替えるため最後の配列に足りない要素数を加えています。
-    if all_files.last.count != all_files.first.count
-      (all_files.first.count - all_files.last.count).times { all_files.last << [ ] }
-    end
+    (all_files.first.count - all_files.last.count).times { all_files.last << [] }
     all_files = all_files.transpose
     all_files.each { |file| puts file.join }
   end
