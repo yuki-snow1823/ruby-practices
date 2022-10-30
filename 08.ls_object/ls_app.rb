@@ -46,13 +46,8 @@ class LsApp
   def display_short
     file_names = []
     all_files = []
-    @ls_files.each_with_index do |file, i|
+    @ls_files.each do |file|
       file_names << file.name.ljust(MARGIN_COUNT)
-      if ((i + 1) % COLUMNS_COUNT).zero?
-        all_files << file_names
-        file_names = []
-        all_files
-      end
     end
     all_files << file_names unless file_names.empty?
 
@@ -79,7 +74,7 @@ class LsApp
   end
 
   private 
-  def count_text_length(file)
-    file.to_s.split('').size
+  def count_text_length(attribute)
+    attribute.to_s.split('').size
   end
 end
