@@ -29,8 +29,7 @@ class LsApp
       else
         Dir.glob('*')
       end
-    file_names = file_names.map { |file_name| LsFile.new(file_name) }
-    file_names.sort_by{|f| f.name }
+    file_names = file_names.sort.map { |file_name| LsFile.new(file_name) }
   end
 
   def display_long
