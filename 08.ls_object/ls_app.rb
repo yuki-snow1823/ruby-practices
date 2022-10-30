@@ -59,8 +59,7 @@ class LsApp
 
     # 行列を入れ替えるため最後の配列に足りない要素数を加えています。
     (all_files.first.count - all_files.last.count).times { all_files.last << [] }
-    all_files = all_files.transpose
-    all_files.each { |file| puts file.join }
+    all_files.transpose.each { |file| puts file.join }
   end
 
   def max_group_count
