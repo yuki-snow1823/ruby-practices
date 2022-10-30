@@ -9,7 +9,6 @@ class LsApp
   def initialize(input_options)
     @input_options = input_options
     @ls_files = generate_ls_files
-    @ls_files = @ls_files.reverse if @input_options['r']
   end
 
   def run
@@ -30,6 +29,7 @@ class LsApp
         Dir.glob('*')
       end
     file_names = file_names.sort.map { |file_name| LsFile.new(file_name) }
+    file_names.reverse if @input_options['r']
   end
 
   def display_long
