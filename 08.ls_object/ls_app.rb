@@ -21,6 +21,7 @@ class LsApp
     file_names = @input_options['a'] ? Dir.foreach('.') : Dir.glob('*')
     file_names = file_names.sort.map { |file_name| LsFile.new(file_name) }
     file_names.reverse if @input_options['r']
+    file_names
   end
 
   def display_long
@@ -44,6 +45,7 @@ class LsApp
   end
 
   def display_short
+    
     file_names = []
     all_files = []
     @ls_files.each do |file|
