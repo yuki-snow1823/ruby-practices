@@ -79,7 +79,7 @@ class LsApp
   end
 
   private 
-  def count_text_length(file)
-    file.to_s.split('').size
+  def count_text_length(attribute)
+    attribute.to_s.split('').size
   end
 end
