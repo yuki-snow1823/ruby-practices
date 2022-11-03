@@ -15,7 +15,7 @@ class LsFile
     '6' => 'rw-',
     '7' => 'rwx'
   }.freeze
-  
+
   TYPE_MAP = {
     '01' => 'p',
     '02' => 'c',
