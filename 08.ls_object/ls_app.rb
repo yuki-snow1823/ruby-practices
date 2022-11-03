@@ -26,10 +26,10 @@ class LsApp
 
   def display_long
     puts "total #{@ls_files.map(&:blocks).sum}"
-    nlink_count = count_max_text_length { |ls_file| ls_file.nlink }
-    owner_count = count_max_text_length { |ls_file| ls_file.owner }
-    group_count = count_max_text_length { |ls_file| ls_file.group }
-    ls_file_size_count = count_max_text_length { |ls_file| ls_file.size }
+    nlink_count = count_max_text_length(&:nlink)
+    owner_count = count_max_text_length(&:owner)
+    group_count = count_max_text_length(&:group)
+    ls_file_size_count = count_max_text_length(&:size)
 
     @ls_files.each do |ls_file|
       output = []
