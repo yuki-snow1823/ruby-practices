@@ -45,19 +45,19 @@ class LsApp
 
   def display_short
     file_names = []
-    all_files = []
+    all_file_names = []
     @ls_files.each_with_index do |file, i|
       file_names << file.name.ljust(MARGIN_COUNT)
       next unless ((i + 1) % COLUMNS_COUNT).zero?
 
-      all_files << file_names
+      all_file_names << file_names
       file_names = []
     end
-    all_files << file_names unless file_names.empty?
+    all_file_names << file_names unless file_names.empty?
 
     # 行列を入れ替えるため最後の配列に足りない要素数を加えています。
-    (all_files.first.count - all_files.last.count).times { all_files.last << [] }
-    all_files.transpose.each { |file| puts file.join }
+    (all_file_names.first.count - all_file_names.last.count).times { all_file_names.last << [] }
+    all_file_names.transpose.each { |file| puts file.join }
   end
 
   def count_max_text_length
