@@ -52,7 +52,6 @@ class LsApp
 
       all_files << file_names
       file_names = []
-      all_files
     end
     all_files << file_names unless file_names.empty?
 
