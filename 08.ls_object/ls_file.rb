@@ -40,9 +40,9 @@ class LsFile
   def permission
     permission = @file_stat.mode
     permission = if permission.to_s(8).slice(0..1) == DIRECTORY_NUMBER
-                   permission.to_s(8).slice(1..3).split('')
+                   permission.to_s(8).slice(1..3).chars
                  else
-                   permission.to_s(8).slice(3..5).split('')
+                   permission.to_s(8).slice(3..5).chars
                  end
     permission.map { |num| PERMISSION_MAP[num] }.join
   end
