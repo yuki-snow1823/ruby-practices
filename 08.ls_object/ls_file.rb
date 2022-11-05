@@ -63,11 +63,11 @@ class LsFile
     @file_stat.nlink
   end
 
-  def owner
+  def owner_name
     Etc.getpwuid(@file_stat.uid).name
   end
 
-  def group
+  def group_name
     Etc.getgrgid(@file_stat.gid).name
   end
 
