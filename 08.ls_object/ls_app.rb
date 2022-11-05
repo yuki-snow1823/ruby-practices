@@ -37,7 +37,7 @@ class LsApp
       output << "#{ls_file.owner.to_s.ljust(owner_count)} "
       output << "#{ls_file.group.to_s.ljust(group_count)} "
       output << ls_file.size.to_s.rjust(ls_file_size_count)
-      output << ls_file.modified_time.to_s
+      output << ls_file.modified_time.strftime('%m %e %H:%M').to_s
       output << ls_file.name.to_s
       puts output.join(' ')
     end
