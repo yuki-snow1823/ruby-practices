@@ -20,8 +20,7 @@ class LsApp
   def generate_ls_files
     file_names = @input_options['a'] ? Dir.foreach('.') : Dir.glob('*')
     file_names = file_names.sort.map { |file_name| LsFile.new(file_name) }
-    file_names.reverse if @input_options['r']
-    file_names
+    @input_options['r'] ? file_names.reverse : file_names
   end
 
   def display_long
