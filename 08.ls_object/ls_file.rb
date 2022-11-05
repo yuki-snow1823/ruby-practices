@@ -44,8 +44,7 @@ class LsFile
                  else
                    permission.to_s(8).slice(3..5).split('')
                  end
-    permission.map! { |num| PERMISSION_MAP[num] }
-    permission.join
+    permission.map { |num| PERMISSION_MAP[num] }.join
   end
 
   def size
