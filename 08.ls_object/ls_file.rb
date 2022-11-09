@@ -39,7 +39,7 @@ class LsFile
 
   def permission
     octal_number_file_mode = @file_stat.mode.to_s(8)
-    permission = if directory?(octal_number_file_mode)
+    permission = if directory?
                    octal_number_file_mode.slice(1..3)
                  else
                    octal_number_file_mode.slice(3..5)
@@ -77,7 +77,7 @@ class LsFile
 
   private
 
-  def directory?(octal_number_file_mode)
-    octal_number_file_mode.slice(0..1) == DIRECTORY_NUMBER
+  def directory?
+    type == 'd'
   end
 end
