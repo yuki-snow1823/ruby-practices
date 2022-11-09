@@ -26,7 +26,7 @@ class LsFile
     '14' => 's'
   }.freeze
 
-  attr_reader :name, :file_stat
+  attr_reader :name
 
   def initialize(file_name)
     @name = file_name
