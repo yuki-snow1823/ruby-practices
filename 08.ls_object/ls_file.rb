@@ -39,7 +39,7 @@ class LsFile
 
   def permission
     file_mode = @file_stat.mode
-    permission = if file_mode.to_s(8).slice(0..1) == DIRECTORY_NUMBER
+    permission = if directory?(file_mode)
                    file_mode.to_s(8).slice(1..3).chars
                  else
                    file_mode.to_s(8).slice(3..5).chars
@@ -73,5 +73,11 @@ class LsFile
 
   def modified_time
     @file_stat.mtime
+  end
+
+  private
+
+  def directory?(file_mode)
+    file_mode.to_s(8).slice(0..1) == DIRECTORY_NUMBER
   end
 end
