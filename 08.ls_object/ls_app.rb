@@ -65,6 +65,6 @@ class LsApp
   end
 
   def count_text_length(attribute)
-    attribute.to_s.chars.size
+    attribute.to_s.size
   end
 end
