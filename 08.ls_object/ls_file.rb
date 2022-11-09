@@ -38,11 +38,11 @@ class LsFile
   end
 
   def permission
-    file_mode = @file_stat.mode
-    permission = if directory?(file_mode)
-                   file_mode.to_s(8).slice(1..3)
+    octal_number_file_mode = @file_stat.mode.to_s(8)
+    permission = if directory?(octal_number_file_mode)
+                   octal_number_file_mode.slice(1..3)
                  else
-                   file_mode.to_s(8).slice(3..5)
+                   octal_number_file_mode.slice(3..5)
                  end
     permission.chars.map { |num| PERMISSION_MAP[num] }.join
   end
@@ -77,7 +77,7 @@ class LsFile
 
   private
 
-  def directory?(file_mode)
-    file_mode.to_s(8).slice(0..1) == DIRECTORY_NUMBER
+  def directory?(octal_number_file_mode)
+    octal_number_file_mode.slice(0..1) == DIRECTORY_NUMBER
   end
 end
