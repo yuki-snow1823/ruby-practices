@@ -40,11 +40,11 @@ class LsFile
   def permission
     file_mode = @file_stat.mode
     permission = if directory?(file_mode)
-                   file_mode.to_s(8).slice(1..3).chars
+                   file_mode.to_s(8).slice(1..3)
                  else
-                   file_mode.to_s(8).slice(3..5).chars
+                   file_mode.to_s(8).slice(3..5)
                  end
-    permission.map { |num| PERMISSION_MAP[num] }.join
+    permission.chars.map { |num| PERMISSION_MAP[num] }.join
   end
 
   def size
