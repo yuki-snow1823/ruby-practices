@@ -46,8 +46,8 @@ class LsApp
   def display_short
     file_names = []
     all_file_names = []
-    @ls_files.each_with_index do |file, i|
-      file_names << file.name.ljust(MARGIN_COUNT)
+    @ls_files.each_with_index do |ls_file, i|
+      file_names << ls_file.name.ljust(MARGIN_COUNT)
       next unless ((i + 1) % COLUMNS_COUNT).zero?
 
       all_file_names << file_names
